@@ -1,5 +1,13 @@
 version: '3.0'
 services:
+  chronograf:
+    image: chronograf
+    hostname: chronograf
+    container_name: chronograf
+    ports:
+      - "8888:8888"
+    volumes:
+      - chronograf:/var/lib/chronograf
   nodered:
     image: nodered/node-red-docker:latest
     hostname: nodered
@@ -7,9 +15,6 @@ services:
     restart: always
     ports:
       - "1880:1880"
-      - "80:1880"
-      - "9999:9999"
-      - "8081:8081"
     depends_on:
       - "rabbitmq"
     volumes:
@@ -18,7 +23,6 @@ services:
     image: nodered/node-red:latest
     hostname: nodered2
     container_name: nodered2
-    restart: always
     ports:
       - "1881:1880"
     depends_on:
@@ -84,3 +88,4 @@ volumes:
   node-red:
   grafana2:
   node-red2:
+  chronograf:
