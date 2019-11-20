@@ -64,6 +64,24 @@ services:
       - "1883:1883"
     environment:
       - DOCKER_VERNEMQ_ALLOW_ANONYMOUS=on
+    networks: 
+      iotserver_net: 
+        ipv4_address: 172.28.1.100
+  vernemq2:
+    image: erlio/docker-vernemq
+    container_name: vernemq2
+    hostname: vernemq2
+    restart: always
+    ports:
+      - "1883:1883"
+    depends_on:
+      - "vernemq1"
+    environment:
+      - DOCKER_VERNEMQ_ALLOW_ANONYMOUS=on
+      - DOCKER_VERNEMQ_DISCOVERY_NODE=172.28.1.100
+    networks: 
+      iotserver_net: 
+        ipv4_address: 172.28.1.101 
   rabbitmq:
     image: rabbitmq:management
     container_name: rabbitmq
@@ -81,6 +99,8 @@ services:
     ports:
       - "3001:3000"
     user: "104"
+    networks:
+      - iotserver_net
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=secret
 
@@ -89,3 +109,10 @@ volumes:
   grafana2:
   node-red2:
   chronograf:
+
+networks:
+    iotserver_net:
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.28.0.0/16
