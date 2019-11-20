@@ -6,6 +6,8 @@ services:
     container_name: chronograf
     ports:
       - "8888:8888"
+    networks:
+      - iotserver_net
     volumes:
       - chronograf:/var/lib/chronograf
   nodered:
@@ -15,6 +17,8 @@ services:
     restart: always
     ports:
       - "1880:1880"
+    networks:
+      - iotserver_net
     depends_on:
       - "rabbitmq"
     volumes:
@@ -24,7 +28,9 @@ services:
     hostname: nodered2
     container_name: nodered2
     ports:
-      - "1881:1880"
+      - "1881:1880"    
+    networks:
+      - iotserver_net
     depends_on:
       - "rabbitmq"
     volumes:
@@ -43,6 +49,8 @@ services:
     hostname: influxdb
     restart: always
     container_name: influxdb
+    networks:
+      - iotserver_net
     volumes:
       - "/home/ubuntu/influxdata:/var/lib/influxdb"
   grafana:
@@ -53,6 +61,8 @@ services:
       - "/var/lib/grafana:/var/lib/grafana"
     ports:
       - "3000:3000"
+    networks:
+      - iotserver_net
     environment: 
       - GF_SECURITY_ADMIN_PASSWORD=secret
   vernemq1:
@@ -87,6 +97,8 @@ services:
     container_name: rabbitmq
     hostname: rabbitmq
     restart: always
+    networks:
+      - iotserver_net
     ports:
       - "8080:15672"
       - "5672:5672"
