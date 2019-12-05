@@ -74,6 +74,7 @@ services:
       - "1883:1883"
     environment:
       - DOCKER_VERNEMQ_ALLOW_ANONYMOUS=on
+      - DOCKER_VERNEMQ_ACCEPT_EULA=yes
     networks: 
       iotserver_net: 
         ipv4_address: 172.28.1.100
@@ -83,11 +84,12 @@ services:
     hostname: vernemq2
     restart: always
     ports:
-      - "1883:1883"
+      - "1884:1883"
     depends_on:
       - "vernemq1"
     environment:
       - DOCKER_VERNEMQ_ALLOW_ANONYMOUS=on
+      - DOCKER_VERNEMQ_ACCEPT_EULA=yes
       - DOCKER_VERNEMQ_DISCOVERY_NODE=172.28.1.100
     networks: 
       iotserver_net: 
