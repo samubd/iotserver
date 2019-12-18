@@ -55,6 +55,8 @@ services:
       - "/home/ubuntu/influxdata:/var/lib/influxdb"
   kapacitor:
     image: kapacitor
+    container_name: kapacitor
+    hostname: kapacitor
     volumes:
       - "/home/ubuntu/kapacitor:/var/lib/kapacitor"
     links:
