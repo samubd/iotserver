@@ -53,6 +53,16 @@ services:
       - iotserver_net
     volumes:
       - "/home/ubuntu/influxdata:/var/lib/influxdb"
+  kapacitor:
+    image: kapacitor
+    volumes:
+      - "/home/ubuntu/kapacitor:/var/lib/kapacitor"
+    links:
+      - influxdb
+    ports:
+      - "9092:9092"
+    networks:
+      - iotserver_net
   grafana:
     image: grafana/grafana:5.0.4
     container_name: grafana
